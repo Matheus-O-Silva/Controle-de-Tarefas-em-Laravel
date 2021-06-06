@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerificarEmailNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -46,4 +47,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
     }    
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerificarEmailNotification($this->name));
+    }   
 }
